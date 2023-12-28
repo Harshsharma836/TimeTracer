@@ -1,0 +1,22 @@
+services:
+  
+  redis:
+    image : redis:latest
+    container_name : Redis_Express
+    ports : 
+      - 6379:6379
+    environment:
+      - redis_password=harsh
+      - redis_databases = hello
+      - redis_port = 6378
+
+  mysql:
+    image : mysql:latest
+    container_name : mySQL_Express
+    ports : 
+      - 3309:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=harsh
+      - MYSQL_DATABASE=Hello
+      - MYSQL_USER=harsh
+      - MYSQL_PASSWORD=harsh

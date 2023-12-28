@@ -1,0 +1,15 @@
+# Node.js
+node_modules/
+
+# Environment variables
+.env
+
+# Dependencies
+package-lock.json
+
+# dist folder
+dist
+
+log
+
+Backup
