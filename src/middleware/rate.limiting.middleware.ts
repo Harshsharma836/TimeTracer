@@ -1,51 +1,32 @@
 import { NextFunction, Request, Response } from "express";
 import { clientRedis } from "../redis/redis.config";
-import { Buffer } from "buffer";
-import EventEmitter = require("events");
-const event = new EventEmitter();
+import { reqInter } from "../utils/helper/user.interface";
 
-interface RateLimitInter {
-  endpoints: string;
-  ratelimit: {
-    time: number;
-    limit: number;
-  };
-}
-
-export const ratelimit = (rule: RateLimitInter) => {
-  const { endpoints, ratelimit } = rule;
-  return async (req: Request, res: Response, next: NextFunction) => {
-    console.log("I am callled");
-    event.on("redis", (val) => {
-      console.log(`Event : ${val}`);
-    });
-    const ip = req.ip;
-
-    const redisid = `${endpoints}/${ip}`; // //ipaddress
-    console.log(`RedisKey = ${redisid}`);
-    const request = await clientRedis.incr(redisid); // it will create a key and give 1 number if not
-    event.emit("redis", () => {
-      `Redis Event Occured`;
-    });
-    // Id is expire within the time -> ratelimet.time
-    if (request === 1) {
-      await clientRedis.expire(redisid, ratelimit.time);
-    }
-
-    if (request > ratelimit.limit) {
-      console.log("TO Many Request");
-      return res.status(424).json({
-        msg: "To Many Request",
-      });
-    }
-    next();
-  };
-};
-
-export const rateLimitedParams: RateLimitInter = {
-  endpoints: "/",
-  ratelimit: {
+export const ratelimit = async (
+  req: reqInter,
+  res: Response,
+  next: NextFunction,
+) => {
+  const user = req.user;
+  let ratelimit = {
     time: 60,
-    limit: 3,
-  },
+    limit: 5,
+  };
+
+  const endpoints = req.url;
+  const ip = req.ip;
+  const redisid = `${endpoints}/${user?.id}/${ip}`;
+  const request = await clientRedis.incr(redisid); // it will create a key and give 1 number if not
+
+  // Id is expire within the time -> ratelimet.time
+  if (request === 1) {
+    await clientRedis.expire(redisid, ratelimit.time);
+  }
+
+  if (request > ratelimit.limit) {
+    return res.status(424).json({
+      msg: "To Many Request , Please wait for 1 Min",
+    });
+  }
+  next();
 };

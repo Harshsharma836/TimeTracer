@@ -5,7 +5,6 @@ import AuthService from "../services/auth.service";
 
 class AuthController {
   static async login(req: Request, res: Response): Promise<void> {
-    console.log("Called");
     try {
       const { email, password } = req.body;
       const data = await Container.get(AuthService).login(email, password);

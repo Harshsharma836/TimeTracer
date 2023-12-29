@@ -14,6 +14,9 @@ export const cacheExpire = async (userId: number) => {
 };
 
 // Queue for Multiple Request handling for Task Completed
-export const requestHandler = async(userId : number , taskId : number)=>{
-  await clientRedis.lPush(`Request-Task-Completed` , `user:${userId} task:${taskId}`);
-}
+export const requestHandler = async (userId: number, taskId: number) => {
+  await clientRedis.lPush(
+    `Request-Task-Completed`,
+    `user:${userId} task:${taskId}`,
+  );
+};

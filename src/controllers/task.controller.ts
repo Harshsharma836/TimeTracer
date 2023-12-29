@@ -2,10 +2,8 @@ import { Request, Response } from "express";
 import { Container } from "typedi";
 import TaskService from "../services/task.service";
 import { reqInter, userInter } from "../utils/helper/user.interface";
-
-import clientRedis from "../redis/redis.config";
-import { Redis } from "ioredis";
 import { logger } from "../middleware/log.middleware";
+import { ratelimit } from "../middleware/rate.limiting.middleware";
 
 class TaskController {
   static async createTask(req: reqInter, res: Response) {

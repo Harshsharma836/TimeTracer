@@ -4,7 +4,11 @@ import { logger } from "../middleware/log.middleware";
 import { number } from "joi";
 import { TaskInter } from "../utils/helper/user.interface";
 import clientRedis from "../redis/redis.config";
-import { cacheExpire, cacheStore, requestHandler } from "../middleware/redis.cache.handler";
+import {
+  cacheExpire,
+  cacheStore,
+  requestHandler,
+} from "../middleware/redis.cache.handler";
 
 const prisma = new PrismaClient();
 
@@ -49,10 +53,8 @@ export class TaskService {
   async getAllTask(userId: number) {
     try {
       const taskData = await clientRedis.lRange(`user:${userId}`, 0, -1);
-
       if (taskData.length != 0) {
-        console.log("I am hit");
-        const data = JSON.parse(taskData[0]);
+        const data = await JSON.parse(taskData[0]);
         return data;
       }
       const task = await prisma.task.findMany({
@@ -62,7 +64,7 @@ export class TaskService {
       });
 
       // Cache Midddleware
-      cacheStore(userId , JSON.stringify(task));
+      cacheStore(userId, JSON.stringify(task));
 
       return task;
     } catch (error: any) {
@@ -126,9 +128,9 @@ export class TaskService {
           description: taskBody.description,
         },
       });
-      if(updateTask.status == "completed"){
+      if (updateTask.status == "completed") {
         // To Expire the key if exists
-        requestHandler(userid , taskId)
+        requestHandler(userid, taskId);
       }
 
       // To Expire the key if exists
@@ -143,4 +145,3 @@ export class TaskService {
   }
 }
 export default TaskService;
-
