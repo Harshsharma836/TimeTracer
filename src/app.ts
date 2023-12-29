@@ -4,6 +4,8 @@ import { routes } from "./routes";
 class App {
   private app: Application;
 
+  private request = 0;
+
   constructor() {
     this.app = express();
     this.config();

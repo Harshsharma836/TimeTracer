@@ -3,12 +3,17 @@ import { Container } from "typedi";
 import TaskService from "../services/task.service";
 import { reqInter, userInter } from "../utils/helper/user.interface";
 
+import clientRedis from "../redis/redis.config";
+import { Redis } from "ioredis";
+import { logger } from "../middleware/log.middleware";
+
 class TaskController {
   static async createTask(req: reqInter, res: Response) {
     try {
       const { title, description, dueDate } = req.body;
       if (req.user) {
-        let user: userInter = req.user;
+        const user: userInter = req.user;
+        const id = user.id;
         const task = await Container.get(TaskService).createTask(
           title,
           description,
@@ -16,10 +21,13 @@ class TaskController {
           req.user?.id,
         );
         res.status(200).send({
+          msg: "Task Created",
           task: task,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error);
+      logger.error(`${error.message}`);
       res.status(300).send({
         msg: "Something Wrong Check the Error Logs",
       });
@@ -94,16 +102,14 @@ class TaskController {
     try {
       if (req.user) {
         const { id } = req.user;
-        const { taskId } = req.body;
+        const taskId = Number(req.params.id);
         const task = await Container.get(TaskService).updateTaskById(
           id,
           taskId,
+          req.body,
         );
-        if (!task) {
-          res.status(404).send(`No Task Available by ${taskId}`);
-        }
         res.status(200).send({
-          task: task,
+          msg: "Task Updated Successully",
         });
       }
     } catch (error) {

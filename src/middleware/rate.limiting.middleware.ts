@@ -5,7 +5,7 @@ import EventEmitter = require("events");
 const event = new EventEmitter();
 
 interface RateLimitInter {
-  endpoints: String;
+  endpoints: string;
   ratelimit: {
     time: number;
     limit: number;

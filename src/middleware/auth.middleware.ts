@@ -3,19 +3,9 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 import { logger } from "./log.middleware";
-import { userInter, reqInter } from "../utils/helper/user.interface";
+import { reqInter } from "../utils/helper/user.interface";
 
 const prisma = new PrismaClient();
-
-// export interface userInter {
-//   id: number;
-//   email: String;
-//   password: String;
-// }
-
-// export interface reqInter extends Request {
-//   user?: userInter;
-// }
 
 const schema = Joi.object().keys({
   email: Joi.string().email().required(),
@@ -28,7 +18,7 @@ export const validateAuthInput = async (
   next: NextFunction,
 ) => {
   try {
-    let result = await schema.validate(req.body);
+    const result = await schema.validate(req.body);
     if (result.error) {
       return res.status(400).send({
         msg: `Schema validation failed ${result.error}`,

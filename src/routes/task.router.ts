@@ -9,6 +9,6 @@ taskRouter.post("/addtask", authroize, TaskController.createTask);
 taskRouter.get("/gettask/:id", authroize, TaskController.getTaskById);
 taskRouter.get("/gettask/", authroize, TaskController.getAllTask);
 taskRouter.delete(":id", authroize, TaskController.deleteTaskById);
-taskRouter.patch("updatetask/:id", authroize, TaskController.updateTaskById);
+taskRouter.patch("/updatetask/:id", authroize, TaskController.updateTaskById);
 
 export default taskRouter;
