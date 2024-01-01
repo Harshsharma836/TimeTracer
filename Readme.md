@@ -64,7 +64,7 @@ The project utilizes Bull MQ for handling asynchronous tasks through Queues and 
 
 Both Queue and Worker functionalities are internally managed by Redis, providing a robust and scalable solution for background job processing.
 
-## Dead Letter Queue
+## Dead Letter Queue 
 
 In the process, jobs (messages) are added to the 'Notification' queue by the producer. Workers take these jobs (messages) one by one. If an error occurs during processing, the job is moved to a Dead Letter Queue for further analysis.
 
@@ -78,3 +78,12 @@ In the process, jobs (messages) are added to the 'Notification' queue by the pro
 6. Run the server: `npm rundev`
 
 Feel free to explore and modify the code to suit your project requirements. Happy coding!
+
+
+
+
+See the images below for a quick overview 0f Dead Letter Queue and BullMQ :
+![image](https://github.com/Harshsharma836/TimeTracer/assets/70514943/1c54d143-79b6-4bb6-bf2f-c233cc71d0a1)
+
+![QueueAndWorker](https://github.com/Harshsharma836/TimeTracer/assets/70514943/cc3ba603-35b5-404a-be77-4a8fe56892d0)
+![Screenshot (100)](https://github.com/Harshsharma836/TimeTracer/assets/70514943/a00eeca2-db48-4a63-b04a-88ec5a118586)
