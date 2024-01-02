@@ -20,7 +20,7 @@ class AuthController {
   static async register(req: Request, res: Response): Promise<void> {
     try {
       const { email, password } = req.body;
-      const data = await Container.get(AuthService).register(email, password);
+      await Container.get(AuthService).register(email, password);
       res.json({ message: `User Created Successfully` });
     } catch (error) {
       logger.error(`Error Occur on HelloController ${error}`);

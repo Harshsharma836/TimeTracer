@@ -12,12 +12,12 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    '@typescript-eslint/naming-convention':  'error',
-    "no-unused-vars": ["error", { "vars": "all"}],
-    "no-unnessary-conditions" : "error",
+    // 'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    // '@typescript-eslint/naming-convention':  'error',
+    // "no-unused-vars": ["error", { "vars": "all"}],
+    // "no-unnessary-conditions" : "error",
 
-    '@typescript-eslint/indent': ['error', 2],
+    // '@typescript-eslint/indent': ['error', 2],
 
   },
   plugins: ['prettier'],

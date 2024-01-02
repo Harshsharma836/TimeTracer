@@ -57,12 +57,12 @@ export const authroize = async (
         }
         next();
       } else {
-        return res.status(404).send({
+        return res.status(401).send({
           msg: "Wrong Token Passed",
         });
       }
     } else {
-      return res.status(400).send({
+      return res.status(401).send({
         msg: `UnAuthorize Access, Please Provide Token`,
       });
     }

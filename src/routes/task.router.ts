@@ -13,7 +13,7 @@ taskRouter.get(
   ratelimit,
   TaskController.getTaskById,
 );
-taskRouter.get("/gettask/", authroize, ratelimit, TaskController.getAllTask);
+taskRouter.get("/gettask/", authroize, TaskController.getAllTask);
 taskRouter.delete(":id", authroize, ratelimit, TaskController.deleteTaskById);
 taskRouter.patch(
   "/updatetask/:id",
@@ -21,5 +21,7 @@ taskRouter.patch(
   ratelimit,
   TaskController.updateTaskById,
 );
+
+taskRouter.post("/sendemail", authroize, TaskController.sendEmail);
 
 export default taskRouter;

@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { Container } from "typedi";
 import TaskService from "../services/task.service";
 import { reqInter, userInter } from "../utils/helper/user.interface";
 import { logger } from "../middleware/log.middleware";
-import { ratelimit } from "../middleware/rate.limiting.middleware";
+import { init } from "../redis/MessagesQueue/producer";
 
 class TaskController {
   static async createTask(req: reqInter, res: Response) {
@@ -18,7 +18,7 @@ class TaskController {
           dueDate,
           req.user?.id,
         );
-        res.status(200).send({
+        res.status(201).send({
           msg: "Task Created",
           task: task,
         });
@@ -40,6 +40,7 @@ class TaskController {
 
         //if(!taskId) return res.status(300).send(`Provide Task Id`)
         const task = await Container.get(TaskService).getTask(id, taskId);
+
         if (!task) {
           res.status(404).send(`No Task Available by ${taskId}`);
         }
@@ -63,11 +64,12 @@ class TaskController {
           res.status(404).send(`No Task Available by ${id}`);
         }
         res.status(200).send({
-          task: task,
+          task: "task",
         });
       }
     } catch (error) {
-      res.status(300).send({
+      console.log(error);
+      res.status(400).send({
         msg: "Something Wrong Check the Error Logs",
       });
     }
@@ -106,10 +108,26 @@ class TaskController {
           taskId,
           req.body,
         );
-        res.status(200).send({
+        res.status(201).send({
           msg: "Task Updated Successully",
+          task: task,
         });
       }
+    } catch (error) {
+      res.status(300).send({
+        msg: "Something Wrong Check the Error Logs",
+      });
+    }
+  }
+
+  static async sendEmail(req: reqInter, res: Response) {
+    try {
+      const { email, subject, body } = req.body;
+      const msg = await init(email, subject, body);
+
+      res.status(200).send({
+        msg: `Email ${email} Added to Bull MQ`,
+      });
     } catch (error) {
       res.status(300).send({
         msg: "Something Wrong Check the Error Logs",
