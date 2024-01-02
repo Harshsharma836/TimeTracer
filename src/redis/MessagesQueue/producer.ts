@@ -11,5 +11,4 @@ async function init(){
     })
     console.log('Job added to Queue' , result.id)
 }
-
 init();
