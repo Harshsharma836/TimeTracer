@@ -10,7 +10,13 @@ const prisma = new PrismaClient();
 // Auth Check
 describe("GET /task/gettask/", async () => {
   test("It will check the authorization", async () => {
-    return request(app).get("/task/gettask").expect(201);
+    return (
+      request(app)
+        .get("/task/gettask")
+        // .set("Authorization" , `Bearer ${token}`)
+        // .expect("Authorization" , `Bearer ${token}`)
+        .expect(401)
+    );
   });
 });
 
@@ -65,7 +71,7 @@ describe(`GET /task/gettask/${taskId}`, async () => {
       .expect(200)
       .then((res: any) => {
         expect(res.statusCode).toBe(200);
-        let data = res.body.task[0];
+        const data = res.body.task[0];
         console.log({ msg: `Task By Id : ${data.id}` });
       });
   });

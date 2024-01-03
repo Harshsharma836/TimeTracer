@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { clientRedis } from "../redis/redis.config";
-import { reqInter } from "../utils/helper/user.interface";
+import { clientRedis } from "../../redis/redis.config";
+import { reqInter } from "../../utils/helper/user.interface";
 
 export const ratelimit = async (
   req: reqInter,
@@ -16,7 +16,7 @@ export const ratelimit = async (
   const endpoints = req.url;
   const ip = req.ip;
   const redisid = `${endpoints}/${user?.id}/${ip}`;
-  const request = await clientRedis.incr(redisid); // it will create a key and give 1 number if not
+  const request = await clientRedis.incr(redisid); // It will create a key and give 1 number if not
 
   // Id is expire within the time -> ratelimet.time
   if (request === 1) {

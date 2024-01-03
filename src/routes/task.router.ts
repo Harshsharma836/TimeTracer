@@ -2,7 +2,7 @@ import express from "express";
 import { authroize, validateAuthInput } from "../middleware/auth.middleware";
 import AuthController from "../controllers/auth.controller";
 import TaskController from "../controllers/task.controller";
-import { ratelimit } from "../middleware/rate.limiting.middleware";
+import { ratelimit } from "../middleware/ratelimting/rate.limiting.middleware";
 
 const taskRouter = express.Router();
 

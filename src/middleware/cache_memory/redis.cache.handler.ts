@@ -1,6 +1,4 @@
-import { Redis } from "ioredis";
-import clientRedis from "../redis/redis.config";
-import { TaskInter } from "../utils/helper/user.interface";
+import clientRedis from "../../redis/redis.config";
 
 export const cacheStore = async (userId: number, task: string) => {
   // Store key as user:id value as json
@@ -13,6 +11,7 @@ export const cacheExpire = async (userId: number) => {
   await clientRedis.EXPIRE(`user:${userId}`, 0);
 };
 
+// Not using Now : Bull MQ is using
 // Queue for Multiple Request handling for Task Completed
 export const requestHandler = async (userId: number, taskId: number) => {
   await clientRedis.lPush(

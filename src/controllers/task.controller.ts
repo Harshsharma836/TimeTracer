@@ -3,7 +3,7 @@ import { Container } from "typedi";
 import TaskService from "../services/task.service";
 import { reqInter, userInter } from "../utils/helper/user.interface";
 import { logger } from "../middleware/log.middleware";
-import { init } from "../redis/MessagesQueue/producer";
+import { initEmailQueue } from "../middleware/EmailQueue/producer";
 
 class TaskController {
   static async createTask(req: reqInter, res: Response) {
@@ -123,7 +123,7 @@ class TaskController {
   static async sendEmail(req: reqInter, res: Response) {
     try {
       const { email, subject, body } = req.body;
-      const msg = await init(email, subject, body);
+      const msg = await initEmailQueue(email, subject, body);
 
       res.status(200).send({
         msg: `Email ${email} Added to Bull MQ`,

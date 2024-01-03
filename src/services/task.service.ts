@@ -8,7 +8,7 @@ import {
   cacheExpire,
   cacheStore,
   requestHandler,
-} from "../middleware/redis.cache.handler";
+} from "../middleware/cache_memory/redis.cache.handler";
 
 const prisma = new PrismaClient();
 
@@ -132,7 +132,6 @@ export class TaskService {
         // To Expire the key if exists
         requestHandler(userid, taskId);
       }
-
       // To Expire the key if exists
       cacheExpire(userid);
 
