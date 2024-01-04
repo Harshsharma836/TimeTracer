@@ -40,7 +40,7 @@ The project includes a comprehensive authentication system and logging middlewar
 
 ## Task CRUD Operations
 
-Users can perform CRUD operations on tasks, including creating, updating, and deleting tasks. The status of a task can also be changed from pending to complete.
+Users can perform CRUD operations on tasks safely, including creating, updating, and deleting tasks. The status of a task can also be changed from pending to complete.
 
 ## Caching with Redis
 
