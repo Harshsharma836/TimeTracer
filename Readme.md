@@ -87,3 +87,6 @@ See the images below for a quick overview 0f Dead Letter Queue and BullMQ :
 
 ![QueueAndWorker](https://github.com/Harshsharma836/TimeTracer/assets/70514943/cc3ba603-35b5-404a-be77-4a8fe56892d0)
 ![Screenshot (100)](https://github.com/Harshsharma836/TimeTracer/assets/70514943/a00eeca2-db48-4a63-b04a-88ec5a118586)
+Open the PDF : [RedisTask.pdf](https://github.com/Harshsharma836/TimeTracer/files/13843300/RedisTask.pdf)
+
+
