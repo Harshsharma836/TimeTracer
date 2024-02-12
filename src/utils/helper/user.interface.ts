@@ -14,4 +14,5 @@ export interface TaskInter {
   title: string;
   description: string;
   status: string;
+  open? : boolean;
 }
