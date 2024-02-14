@@ -16,3 +16,8 @@ export interface TaskInter {
   status: string;
   open? : boolean;
 }
+
+export interface ForgotPasswordInter {
+  email: string;
+  password: string;
+}
